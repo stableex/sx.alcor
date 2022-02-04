@@ -13,6 +13,7 @@ namespace alcor {
     // reference
     const name id = "alcor"_n;
     const name code = "eostokensdex"_n;
+    const name wax_code = "alcordexmain"_n;
     const string description = "Alcor Converter";
 
     const static uint8_t MAX_ORDERS = 20;        // place MAX_ORDERS orders at a time only - to fit in one transaction
@@ -92,12 +93,10 @@ namespace alcor {
                 if(in.amount - rowit->ask.amount >= 0) out.amount += rowit->bid.amount * fee_adj;
                 else out.amount += in.amount * rowit->bid.amount / rowit->ask.amount * fee_adj;
                 in -= rowit->ask;
-                // eosio::print("\n", rowit->id, " bid: ", rowit->bid, " ask: ", rowit->ask, " price: ", rowit->unit_price, " in: ", in, " out: ", out);
+                //eosio::print("\n", rowit->id, " bid: ", rowit->bid, " ask: ", rowit->ask, " price: ", rowit->unit_price, " in: ", in, " out: ", out);
             }
         }
-        // eosio::print("\n  in left: ", in);
         if(in.amount > 0) return { asset{0, sym_out}, "" };   //if there are not enough orders out fulfill our order
-
         return { out, memo };
     };
 };
